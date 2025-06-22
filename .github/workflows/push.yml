@@ -20,10 +20,10 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Run debug script
+    - name: Run script
       env:
         CHANNEL_SECRET: ${{ secrets.CHANNEL_SECRET }}
         CHANNEL_ACCESS_TOKEN: ${{ secrets.CHANNEL_ACCESS_TOKEN }}
         GROUP_ID: ${{ secrets.GROUP_ID }}
-      run: python main_text.py
+      run: python main.py
 
