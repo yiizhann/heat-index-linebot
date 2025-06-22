@@ -1,4 +1,7 @@
 
+# 請將此檔案手動放入 GitHub Repo 的 .github/workflows/push.yml 路徑中
+# 或參考內容建立一樣的 GitHub Actions 工作流程
+
 name: Daily Heat Index Push
 
 on:
