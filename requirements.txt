@@ -1,5 +1,4 @@
-requests
-pillow
-beautifulsoup4
 selenium
-webdriver-manager
+Pillow
+line-bot-sdk
+requests
