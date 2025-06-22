@@ -10,7 +10,7 @@ LINE_TOKEN = os.getenv("LINE_TOKEN")
 GROUP_ID = os.getenv("GROUP_ID")
 
 def capture_heat_image():
-    url = "https://hiosha.osha.gov.tw/content/info/heat1.aspx"
+    url = "http://goat.pakka.ai:8008/wbgt?token=47fc5150d1ae4f1290bf43e9d4746b5e"
     res = requests.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
 
