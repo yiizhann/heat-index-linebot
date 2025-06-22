@@ -1,27 +1,30 @@
+name: Daily Heat Index Push
 
-import os
-from linebot import LineBotApi
-from linebot.models import TextSendMessage
-from linebot.exceptions import LineBotApiError
+on:
+  workflow_dispatch:  # 手動觸發
+  schedule:
+    - cron: '0 1,3,5,7 * * *'  # 台灣時間 9:00、11:00、13:00、15:00 執行（UTC+8）
 
-def push_text_message():
-    channel_access_token = os.getenv("CHANNEL_ACCESS_TOKEN")
-    group_id = os.getenv("GROUP_ID")
+jobs:
+  push:
+    runs-on: ubuntu-latest
 
-    print(f"使用群組 ID: {group_id}")
-    print(f"Access Token 開頭: {channel_access_token[:10]}...")
+    steps:
+    - name: 下載程式碼
+      uses: actions/checkout@v3
 
-    try:
-        line_bot_api = LineBotApi(channel_access_token)
-        message = TextSendMessage(text="✅ LINE 群組推播測試成功！")
-        line_bot_api.push_message(group_id, message)
-        print("✅ 推播文字成功")
-    except LineBotApiError as e:
-        print("❌ LINE API 錯誤：", e.message)
-        print(f"Status Code: {e.status_code}")
-        print(f"Response: {e.error.response}")
-    except Exception as ex:
-        print("❌ 其他錯誤：", ex)
+    - name: 安裝 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-if __name__ == "__main__":
-    push_text_message()
+    - name: 安裝套件
+      run: |
+        pip install line-bot-sdk
+
+    - name: Run LINE text message test
+      env:
+        CHANNEL_SECRET: ${{ secrets.CHANNEL_SECRET }}
+        CHANNEL_ACCESS_TOKEN: ${{ secrets.CHANNEL_ACCESS_TOKEN }}
+        GROUP_ID: ${{ secrets.GROUP_ID }}
+      run: python main_text.py
